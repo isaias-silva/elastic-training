@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import productPlugin from "./plugins/productPlugin";
+import productPlugin from "./plugins/bookPlugin";
 
 
 

@@ -1,89 +1,50 @@
 # estudo sobre elasticsearch
 
-nesse repositório para estudo é testado o indexing e mapping do elasticsearch em conjunto com bun.
+repositório de estudos sobre elastic.
 
-### endpoints:
-
-1 - após iniciar o container do elastic na porta 9200:
-- defininir o mapping
-  
-POST http://localhost:9200/products
-
-```json
-{
-  "mappings": {
-    "properties": {
-      "name": { "type": "text", "analyzer": "portuguese" },
-      "price": { "type": "float" },
-      "description": {
-        "type": "text",
-        "analyzer": "portuguese"
-    }}}
-}
-
+## inicialização
+ iniciar o container do elastic na porta 9200
+```shell
+cd docker && docker compose up --build -d
 ```
+## tópicos:
 
-2 - adicionar o arquivo .env na pasta app com a url local do elastic na propriedade ES_URL (http://localhost:9200/products)
+### Indexing & mapping 
+1- mapping definido via shell na inicialização do container.
+
+2 - adicionar o arquivo .env na pasta api com a url local do elastic na propriedade ES_URL (http://localhost:9200)
 
 3 - iniciar a api com bun run dev.
 
-4 - indexar produtos:
+4 - indexar livros:
 
 POST http://localhost:4100/batch/index
 ```json
 
 [
-  {"name": "Boné Águia de Fogo", "price": 300, "description": "Melhor produto de boné"},
-  {"name": "Camiseta Algodão Egípcio", "price": 150, "description": "Conforto extremo para o dia a dia"},
-  {"name": "Tênis Urban Runner", "price": 450, "description": "Performance e estilo nas ruas"},
-  {"name": "Jaqueta de Couro Vintage", "price": 890, "description": "Estilo clássico com durabilidade"},
-  {"name": "Calça Jeans Slim Fit", "price": 220, "description": "Corte moderno e ajuste perfeito"},
-  {"name": "Relógio Sport Digital", "price": 180, "description": "Resistente à água com cronômetro"},
-  {"name": "Óculos de Sol Aviador", "price": 350, "description": "Lentes polarizadas com proteção UV"},
-  {"name": "Mochila Tech 30L", "price": 280, "description": "Compartimento acolchoado para notebook"},
-  {"name": "Cinto de Couro Italiano", "price": 120, "description": "Acabamento premium artesanal"},
-  {"name": "Moletom Oversized", "price": 190, "description": "Tecido flanelado de alta gramatura"},
-  {"name": "Bermuda Cargo Militar", "price": 140, "description": "Bolsos utilitários e tecido ripstop"},
-  {"name": "Sapato Social Oxford", "price": 400, "description": "Elegância para ocasiões formais"},
-  {"name": "Gorro de Lã Inverno", "price": 60, "description": "Proteção térmica com estilo"},
-  {"name": "Meias Performance Cano Alto", "price": 45, "description": "Tecnologia que absorve o suor"},
-  {"name": "Corrente de Prata 925", "price": 550, "description": "Design minimalista e sofisticado"},
-  {"name": "Shorts de Banho Floral", "price": 95, "description": "Secagem rápida para o verão"},
-  {"name": "Camisa Polo Piquet", "price": 130, "description": "Visual casual refinado"},
-  {"name": "Blazer Slim Moderno", "price": 620, "description": "Corte italiano para eventos"},
-  {"name": "Carteira de Couro Compacta", "price": 85, "description": "Design slim com bloqueio RFID"},
-  {"name": "Pulseira de Aço Escovado", "price": 110, "description": "Acessório robusto e moderno"},
-  {"name": "Regata Dry Fit", "price": 75, "description": "Ideal para treinos intensos"},
-  {"name": "Chinelo Ergonômico", "price": 115, "description": "Máximo conforto para os pés"},
-  {"name": "Colete Térmico Puff", "price": 320, "description": "Leve e isolante para o frio"},
-  {"name": "Bandana Estampada", "price": 35, "description": "Acessório versátil em algodão"},
-  {"name": "Suspensório Retrô", "price": 55, "description": "Toque clássico ao visual"},
-  {"name": "Gravata de Seda", "price": 145, "description": "Textura suave e brilho discreto"},
-  {"name": "Botas de Trilha Impermeável", "price": 580, "description": "Solado com máxima aderência"},
-  {"name": "Parka de Nylon", "price": 410, "description": "Resistente ao vento e chuva leve"},
-  {"name": "Camisa de Linho", "price": 260, "description": "Frescor e elegância natural"},
-  {"name": "Tênis Casual Branco", "price": 310, "description": "O básico essencial que combina com tudo"},
-  {"name": "Boné Snapback Graffiti", "price": 165, "description": "Arte urbana bordada à mão"},
-  {"name": "Luvas de Couro Térmicas", "price": 175, "description": "Forro em lã para invernos rigorosos"},
-  {"name": "Cachecol de Cashmere", "price": 490, "description": "Luxo e maciez incomparáveis"},
-  {"name": "Shoulder Bag Minimalista", "price": 135, "description": "Praticidade para carregar o essencial"},
-  {"name": "Pijama de Algodão Soft", "price": 160, "description": "Noites de sono com total conforto"},
-  {"name": "Sandália de Couro", "price": 200, "description": "Estilo rústico e duradouro"},
-  {"name": "Jaqueta Jeans Destroyer", "price": 380, "description": "Lavagem moderna com puídos"},
-  {"name": "Calça Jogger Moletom", "price": 170, "description": "Punhos elásticos e cordão de ajuste"},
-  {"name": "Anel de Tungstênio", "price": 240, "description": "Material ultra resistente a riscos"},
-  {"name": "Pulseira de Couro Trançado", "price": 90, "description": "Detalhes em aço inoxidável"},
-  {"name": "Camiseta Estampa Exclusiva", "price": 110, "description": "Edição limitada de artista local"},
-  {"name": "Sobretudo de Lã Batida", "price": 1100, "description": "Peça premium para alta elegância"},
-  {"name": "Capa de Chuva Transparente", "price": 125, "description": "Design futurista e funcional"},
-  {"name": "Bucket Hat Reversível", "price": 98, "description": "Dois estilos em um único chapéu"},
-  {"name": "Mala de Viagem de Mão", "price": 470, "description": "Tamanho ideal para cabine de avião"},
-  {"name": "Suéter Gola V", "price": 210, "description": "Malha leve para meia-estação"},
-  {"name": "Bota Chelsea de Camurça", "price": 530, "description": "Clássico britânico com sola de borracha"},
-  {"name": "Camisa Xadrez Flanela", "price": 185, "description": "Visual lenhador autêntico"},
-  {"name": "Boné Trucker Vintage", "price": 140, "description": "Tela respirável e aba curva"}
+  { "name": "Clean Code", "author": "Robert C. Martin", "price": 150, "description": "Manual de boas práticas para escrever código legível e sustentável", "keywords": ["tecnologia", "programação", "software"] },
+  { "name": "O Senhor dos Anéis: A Sociedade do Anel", "author": "J.R.R. Tolkien", "price": 85, "description": "A jornada épica de Frodo para destruir o Um Anel", "keywords": ["ficção", "fantasia", "aventura"] },
+  { "name": "O Algoritmo Mestre", "author": "Pedro Domingos", "price": 120, "description": "Como a busca pela máquina de aprendizado definitiva mudará o mundo", "keywords": ["tecnologia", "IA", "ciência"] },
+  { "name": "Duna", "author": "Frank Herbert", "price": 95, "description": "Uma obra-prima da ficção científica sobre política, religião e ecologia", "keywords": ["ficção", "sci-fi", "clássico"] },
+  { "name": "Refatoração", "author": "Martin Fowler", "price": 180, "description": "Guia para aperfeiçoar o design de códigos existentes", "keywords": ["tecnologia", "desenvolvimento", "arquitetura"] },
+  { "name": "1984", "author": "George Orwell", "price": 60, "description": "A distopia clássica de George Orwell sobre vigilância e controle", "keywords": ["ficção", "distopia", "política"] },
+  { "name": "Pai Rico, Pai Pobre", "author": "Robert Kiyosaki", "price": 70, "description": "Lições sobre finanças pessoais e independência financeira", "keywords": ["técnico", "finanças", "negócios"] },
+  { "name": "O Nome do Vento", "author": "Patrick Rothfuss", "price": 110, "description": "A história de Kvothe, o mago e músico mais famoso de sua era", "keywords": ["ficção", "fantasia", "literatura"] },
+  { "name": "Docker para Desenvolvedores", "author": "Rafael Gomes", "price": 140, "description": "Como criar e gerenciar containers de forma eficiente", "keywords": ["tecnologia", "devops", "infraestrutura"] },
+  { "name": "O Homem Mais Rico da Babilônia", "author": "George S. Clason", "price": 45, "description": "Segredos milenares para o sucesso financeiro", "keywords": ["técnico", "finanças", "sucesso"] },
+  { "name": "Neuromancer", "author": "William Gibson", "price": 80, "description": "O romance que definiu o gênero Cyberpunk", "keywords": ["ficção", "cyberpunk", "sci-fi"] },
+  { "name": "Aprendizado de Máquina com Scikit-Learn e TensorFlow", "author": "Aurélien Géron", "price": 260, "description": "Guia prático para construir sistemas inteligentes", "keywords": ["tecnologia", "IA", "python"] },
+  { "name": "Fundação", "author": "Isaac Asimov", "price": 105, "description": "Isaac Asimov narra a queda e o renascimento de um império galáctico", "keywords": ["ficção", "sci-fi", "espaço"] },
+  { "name": "Expressões Regulares: Guia de Consulta Rápida", "author": "Aurelio Marinho Jargas", "price": 55, "description": "Domine o poder do Regex para manipulação de textos", "keywords": ["tecnologia", "ferramentas", "programação"] },
+  { "name": "Cem Anos de Solidão", "author": "Gabriel García Márquez", "price": 90, "description": "A saga épica da família Buendía em Macondo", "keywords": ["ficção", "realismo mágico", "clássico"] },
+  { "name": "Sprint", "author": "Jake Knapp", "price": 88, "description": "Como resolver grandes problemas e testar novas ideias em apenas cinco dias", "keywords": ["técnico", "inovação", "negócios"] },
+  { "name": "Crônicas de Gelo e Fogo: A Guerra dos Tronos", "author": "George R.R. Martin", "price": 130, "description": "O jogo político pelo Trono de Ferro começa aqui", "keywords": ["ficção", "fantasia", "drama"] },
+  { "name": "Arquitetura Limpa", "author": "Robert C. Martin", "price": 170, "description": "O guia do artesão para estrutura e design de software", "keywords": ["tecnologia", "arquitetura", "software"] },
+  { "name": "Mindset: A Nova Psicologia do Sucesso", "author": "Carol S. Dweck", "price": 65, "description": "Como a nossa atitude mental influencia o sucesso", "keywords": ["técnico", "psicologia", "autoajuda"] },
+  { "name": "O Guia do Mochileiro das Galáxias", "author": "Douglas Adams", "price": 75, "description": "Uma viagem hilária pelo universo após a destruição da Terra", "keywords": ["ficção", "humor", "sci-fi"] }
 ]
 
 ```
+### pesquisa e consulta:
 
-5 - pesquisar em http://localhost:4100/search?word=PALAVRA
+ http://localhost:4100/search?word=PALAVRA
