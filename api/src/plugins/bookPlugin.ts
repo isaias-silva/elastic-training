@@ -48,6 +48,17 @@ export default new Elysia()
             category: t.Optional(t.String())
 
         })
+    }).get("/aggregations", async ({ query, index, generateElasticQuery }) => {
+
+        return await elasticService.aggregateDocuments(generateElasticQuery(query), index);
+    }, {
+        query: t.Object({
+            word: t.Optional(t.String()),
+            maxPrice: t.Optional(t.Number()),
+            minPrice: t.Optional(t.Number()),
+            category: t.Optional(t.String())
+
+        })
     }).post("/index", async ({ body, index }) => {
 
         return await elasticService.indexDocument(body, index)

@@ -48,3 +48,9 @@ POST http://localhost:4100/batch/index
 ### pesquisa e consulta:
 
  http://localhost:4100/search?word=PALAVRA
+
+### agregações:
+
+Resumo por categoria (`keywords`) e estatísticas de preço usando agregação no Elasticsearch:
+
+http://localhost:4100/aggregations?word=clean&minPrice=50&maxPrice=200&category=tecnologia
