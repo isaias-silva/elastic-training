@@ -1,0 +1,13 @@
+filebeat.inputs:
+  - type: filestream
+    id: access-log-input
+    enabled: true
+    paths:
+      - /var/log/app/access_log
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+processors:
+  - add_host_metadata: ~
+  - add_docker_metadata: ~

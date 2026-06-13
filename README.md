@@ -3,10 +3,16 @@
 repositório de estudos sobre elastic.
 
 ## inicialização
- iniciar o container do elastic na porta 9200
+ iniciar a stack com Elasticsearch, Logstash, Filebeat e Kibana
 ```shell
 cd docker && docker compose up --build -d
 ```
+
+O fluxo de ingestão de logs fica assim:
+
+`access_log` -> `Filebeat` -> `Logstash` -> `Elasticsearch`
+
+A API escreve esse `access_log` em JSON usando `pino`, e o Logstash faz o parse desse conteúdo antes de indexar.
 ## tópicos:
 
 ### Indexing & mapping 
